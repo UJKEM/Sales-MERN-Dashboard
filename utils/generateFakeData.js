@@ -7,6 +7,8 @@ const generateFakeData = () => {
   const numRowsPerSalesFile = 100;
   const numProductsFiles = 10;
   const numRowsPerProductsFile = 10;
+  const salesDir = path.join(__dirname, "./data", "sales");
+  const productsDir = path.join(__dirname, "./data", "products");
 
   // Generate fake sales data
   for (let i = 0; i < numSalesFiles; i++) {
@@ -21,13 +23,10 @@ const generateFakeData = () => {
           max: 1000,
           fixed: 2,
         }),
-        transaction_date: chance.date({string: true, american: false}),
+        transaction_date: chance.date({ string: true, american: false }),
       });
     }
-    fs.writeFileSync(
-      path.join(__dirname, "data", "sales", `sales_${i + 1}.csv`),
-      csv.format(data)
-    );
+    fs.writeFileSync(`${salesDir}/sales_${i + 1}.csv`, csv.format(data));
   }
 
   // Generate fake products data
@@ -41,13 +40,10 @@ const generateFakeData = () => {
         cost_price: chance.floating({ min: 0, max: 1000, fixed: 2 }),
         selling_price: chance.floating({ min: 0, max: 1000, fixed: 2 }),
         category: chance.word({ length: 6 }),
-        expiry_date: chance.date({string: true, american: false});,
+        expiry_date: chance.date({ string: true, american: false }),
       });
     }
-    fs.writeFileSync(
-      path.join(__dirname, "data", "products", `products_${i + 1}.csv`),
-      csv.format(data)
-    );
+    fs.writeFileSync(`${productsDir}/products_${i + 1}.csv`, csv.format(data));
   }
 };
 

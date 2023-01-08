@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const generateFakeData = require("./utils/generateFakeData");
-
 //Package to connect to the database
 const mongoose = require("mongoose");
 
@@ -12,6 +10,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const helmet = require("helmet");
+
+const generateFakeData = require("./utils/generateFakeData");
 
 const {
   processSales,
@@ -31,15 +31,41 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+// 404 middleware
+app.use((req, res, next) => {
+  const error = new Error("404: Not Found");
+  error.status = 404;
+  next(error);
+});
+
+// Error handler middleware
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
+
 mongoose
-  .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
+
+    // Start the server
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
-      console.log(`Open http://localhost:${port}/ in your browser`);
+      //Generate Fake Data and start processing it into MongoDB
       generateFakeData();
-      setInterval(processSales, 60 * 1000);
-      setInterval(processProducts, 90 * 1000);
+      processSales();
+      processProducts();
     });
+  })
+  .catch((error) => {
+    console.error(error);
   });
