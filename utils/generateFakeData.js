@@ -1,5 +1,6 @@
 const fs = require("fs");
 const csv = require("csv-parser");
+const path = require("path");
 
 const generateFakeData = () => {
   const numSalesFiles = 20;
@@ -20,10 +21,13 @@ const generateFakeData = () => {
           max: 1000,
           fixed: 2,
         }),
-        transaction_date: chance.date({ year: 2020 }),
+        transaction_date: chance.date({string: true, american: false}),
       });
     }
-    fs.writeFileSync(`data/sales/sales_${i + 1}.csv`, csv.format(data));
+    fs.writeFileSync(
+      path.join(__dirname, "data", "sales", `sales_${i + 1}.csv`),
+      csv.format(data)
+    );
   }
 
   // Generate fake products data
@@ -37,10 +41,13 @@ const generateFakeData = () => {
         cost_price: chance.floating({ min: 0, max: 1000, fixed: 2 }),
         selling_price: chance.floating({ min: 0, max: 1000, fixed: 2 }),
         category: chance.word({ length: 6 }),
-        expiry_date: chance.date({ year: 2020 }),
+        expiry_date: chance.date({string: true, american: false});,
       });
     }
-    fs.writeFileSync(`data/products/products_${i + 1}.csv`, csv.format(data));
+    fs.writeFileSync(
+      path.join(__dirname, "data", "products", `products_${i + 1}.csv`),
+      csv.format(data)
+    );
   }
 };
 

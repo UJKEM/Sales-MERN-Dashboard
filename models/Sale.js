@@ -20,7 +20,7 @@ const saleSchema = new Schema({
     required: true,
   },
   transaction_date: {
-    type: Date,
+    type: String,
     required: true,
   },
 });

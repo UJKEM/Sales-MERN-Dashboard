@@ -1,3 +1,7 @@
+const Sale = require("../models/Sale");
+
+const Product = require("../models/Product");
+
 const processAndStoreData = (data) => {
   // Convert the data string to a JavaScript object
   const rows = data.split("\n");
@@ -15,7 +19,7 @@ const processAndStoreData = (data) => {
   let schema;
   switch (collectionName) {
     case "transaction_id":
-      schema = Sales;
+      schema = Sale;
       break;
     case "product_id":
       schema = Product;
