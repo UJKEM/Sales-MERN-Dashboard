@@ -12,11 +12,11 @@ const saleSchema = new Schema({
     required: true,
   },
   quantity: {
-    type: Float,
+    type: Number,
     required: true,
   },
   total_transaction_amount: {
-    type: Float,
+    type: Number,
     required: true,
   },
   transaction_date: {

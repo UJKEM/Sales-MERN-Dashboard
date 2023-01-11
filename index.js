@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 //Package to connect to the database
 const mongoose = require("mongoose");
@@ -18,6 +18,11 @@ const {
   processProducts,
 } = require("./utils/readDataAtIntervals");
 
+//Sales Route Api
+const saleApi = require("./routes/api/Sales");
+
+require("dotenv").config();
+
 //!Cross Origin Resource Sharing
 app.use(cors());
 
@@ -30,6 +35,14 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+//Sales route middleware
+app.use("/api/sales", saleApi);
+
+//Redirect user to '/api/sales' when at '/' route
+app.get("/", (req, res) => {
+  res.redirect("/api/sales");
+});
 
 // 404 middleware
 app.use((req, res, next) => {
@@ -48,10 +61,10 @@ app.use((error, req, res, next) => {
   });
 });
 
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {
@@ -62,10 +75,12 @@ mongoose
       console.log(`Server is running on port ${port}`);
       //Generate Fake Data and start processing it into MongoDB
       generateFakeData();
-      processSales();
-      processProducts();
+      // processSales();
+      // processProducts();
     });
   })
   .catch((error) => {
     console.error(error);
   });
+
+module.exports = app;

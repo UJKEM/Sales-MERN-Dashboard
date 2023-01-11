@@ -16,11 +16,11 @@ const ProductSchema = new Schema({
     required: true,
   },
   cost_price: {
-    type: Float,
+    type: Number,
     required: true,
   },
   selling_price: {
-    type: Float,
+    type: Number,
     required: true,
   },
   category: {
