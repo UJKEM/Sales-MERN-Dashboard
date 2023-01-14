@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
 * {
   margin: 0;
+  box-sizing: content-box;
+}
+
+:root{
+  height: 100vh;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   background: linear-gradient(45deg, purple, rgb(73, 45, 50), rgb(22, 22, 75));
 }
 
@@ -24,6 +29,10 @@ h1{
   background: black;
 }
 
+.loading{
+  color: ghostwhite
+}
+
 .product-input{
   width: 290px;
 }
@@ -37,7 +46,7 @@ h1{
 }
 
 .sale-brand-input{
-  width: 160px;
+  width: 175px;
 }
 
 span:hover{
@@ -113,7 +122,6 @@ th, td {
   margin: 0 auto;
   height: 330px;
   overflow:auto;
-  border: 1px solid black;
   border-radius: 10px;
 }
 

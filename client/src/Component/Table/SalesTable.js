@@ -112,7 +112,7 @@ const SalesTable = (props) => {
           <tbody>
             {sales &&
               filterCaseInsensitive(sales).map((row, index) => (
-                <tr key={index}>
+                <tr key={row.product_id}>
                   <td>{row.transaction_id}</td>
                   <td>{row.product_id}</td>
                   <td>{row.quantity}</td>
@@ -124,7 +124,7 @@ const SalesTable = (props) => {
         </table>
       </div>
       <div className="span-container">
-        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+        <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
           <button
             className="btn btn-sm btn-primary"
             style={{ borderRadius: "20px" }}

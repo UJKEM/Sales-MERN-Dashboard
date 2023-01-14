@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+
 import ProductsTable from "../Table/ProductsTable";
 import SalesTable from "../Table/SalesTable";
+import Spinner from "../Spinner/Spinner";
 
 const Dashboard = () => {
   const [sales, setSales] = useState([]);
@@ -31,7 +33,7 @@ const Dashboard = () => {
   }, [getData]);
 
   return loading ? (
-    <p>Loading...</p>
+    <Spinner />
   ) : !error ? (
     <div className="dashboard-container">
       <div>

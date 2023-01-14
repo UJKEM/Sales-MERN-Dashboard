@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import Spinner from "../Spinner/Spinner";
 
 const HighestLowestSales = () => {
   const [highestSales, setHighestSale] = useState([]);
@@ -35,7 +36,7 @@ const HighestLowestSales = () => {
       <h1>Highest Sale</h1>
       <div className="table table-container table-container-hls table-responsive">
         {loading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : error ? (
           <p>{error}</p>
         ) : (
@@ -74,7 +75,7 @@ const HighestLowestSales = () => {
       <h1>Lowest Sale</h1>
       <div className="table table-container table-container-hls table-responsive">
         {loading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : error ? (
           <p>{error}</p>
         ) : (

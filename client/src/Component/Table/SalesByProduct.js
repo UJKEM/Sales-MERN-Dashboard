@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import Spinner from "../Spinner/Spinner";
 
 const SalesByProduct = () => {
   const limit = 10;
@@ -109,7 +110,7 @@ const SalesByProduct = () => {
       </div>
       <div className="table-container table-responsive">
         {loading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : error ? (
           <p>{error}</p>
         ) : (
@@ -234,7 +235,7 @@ const SalesByProduct = () => {
         </table>
       </div>
       <div className="span-container">
-        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+        <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
           <button
             className="btn btn-primary"
             style={{ borderRadius: "20px" }}

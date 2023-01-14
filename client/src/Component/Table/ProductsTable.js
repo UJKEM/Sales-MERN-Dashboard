@@ -22,7 +22,7 @@ const ProductsTable = (props) => {
   // Sort function
   const sortData = () => {
     setProducts(
-      products.sort((a, b) =>
+      [...products].sort((a, b) =>
         sortAscending
           ? a[sortBy] > b[sortBy]
             ? 1
@@ -130,7 +130,7 @@ const ProductsTable = (props) => {
         </table>
       </div>
       <div className="span-container">
-        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+        <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
           <button
             className="btn btn-sm btn-primary"
             style={{
