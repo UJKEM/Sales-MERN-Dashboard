@@ -1,16 +1,101 @@
+*{
+  margin: 0;
+}
+
 .App {
+  text-align: center;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.product-input{
+  width: 225px;
+}
+
+.sale-input{
+  width: 272px;
+}
+
+span:hover{
+  cursor: pointer;
+  border: 2px dotted rgb(17, 34, 81);
+}
+
+.span-active{
+  font-weight: bolder;
+  color: goldenrod;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  overflow: scroll;
+}
+
+thead {
+  position: sticky; /* make the table header sticky */
+  top: 0; /* set the top position of the table header */
+  background-color: #f5f5f5; /* add a background color to the table header */
+  border-radius: 10px;
+}
+
+th:hover, button:hover{
+  cursor: pointer;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.dashboard-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content:center;
+  margin-top: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.product-input-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items:center;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.sale-input-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items:center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  margin: 0 auto;
+  height: 300px;
+  overflow:auto;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.span-container{
+  display: flex;
+  justify-content: center; /* center horizontally */
+  gap: 15px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.brand-name-column{
+  width: 250px;
 }
 
 .App-header {
@@ -24,15 +109,46 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+header{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  height: 30px
+}
+a{
+text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+nav ul li{
+  margin: 0 10px;
+  list-style: none;
+}
+.right-aligned-tabs {
+  margin-left: auto;
+  display: flex;
+}
+.right-aligned-tabs a{
+  margin-left: 10px;
+}
+
+table::-webkit-scrollbar {
+  width: 0.2em; /* set width of the scrollbar */
+  background-color: transparent; /* set background color of the scrollbar */
+}
+table::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* set color of the thumb */
+  border-radius: 10px; /* match the border-radius of the table */
+}
+
+

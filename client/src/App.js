@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-function App() {
+import Dashboard from "./Component/Dashboard/Dashboard";
+import Header from "./Component/Header/Header";
+
+import SalesByProduct from "./Component/Table/SalesByProduct";
+import SalesByBrand from "./Component/Table/SalesByBrand";
+import HighestLowestSales from "./Component/Table/HIghestLowestSales";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Dashboard />} />
+          <Route exact path="/sales-by-product" element={<SalesByProduct />} />
+          <Route exact path="/sales-by-brand" element={<SalesByBrand />} />
+          <Route
+            exact
+            path="/highest-lowest-sales"
+            element={<HighestLowestSales />}
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
