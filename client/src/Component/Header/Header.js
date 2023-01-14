@@ -7,16 +7,24 @@ const Header = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link className="text-decoration-none" to="/">
+              Home
+            </Link>
           </li>
         </ul>
       </nav>
       <nav>
         <ul>
           <li className="right-aligned-tabs">
-            <Link to="/sales-by-product">Sales by Product</Link>
-            <Link to="/sales-by-brand">Sales by Brand</Link>
-            <Link to="/highest-lowest-sales">Sales</Link>
+            <Link className="text-decoration-none" to="/sales-by-product">
+              Sales by Product
+            </Link>
+            <Link className="text-decoration-none" to="/sales-by-brand">
+              Sales by Brand
+            </Link>
+            <Link className="text-decoration-none" to="/highest-lowest-sales">
+              Sales
+            </Link>
           </li>
         </ul>
       </nav>

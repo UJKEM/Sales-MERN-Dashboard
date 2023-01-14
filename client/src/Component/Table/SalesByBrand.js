@@ -90,24 +90,24 @@ const SalesByBrand = () => {
 
   return (
     <>
-      <h1>Sales By Brand</h1>
       <div className="sale-input-container">
+        <h1>Sales By Brand</h1>
         <input
-          className="sale-input"
+          className="sale-brand-input"
           type="text"
           placeholder="Filter by brand name"
           value={filterText}
           onChange={handleFilterChange}
         />
       </div>
-      <div className="table-container">
+      <div className="table-container table-responsive">
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <table>
-            <thead>
+          <table className="table mb-0 table-bordered table-dark table-striped">
+            <thead className="text-center">
               <tr>
                 <th data-column="sno" onClick={handleHeaderClick}>
                   S.No
@@ -144,36 +144,43 @@ const SalesByBrand = () => {
                   )
                 )
               ) : (
-                <p>Data for sales by brand not available. Try again later.</p>
+                <p className="not-available">
+                  Data for sales by brand not available. Try again later.
+                </p>
               )}
             </tbody>
           </table>
         )}
       </div>
       <div className="span-container">
-        <button
-          style={{ visibility: currentSpan === 1 ? "hidden" : "" }}
-          disabled={currentSpan === 1}
-          onClick={() => handleNavigation("Prev")}
-        >
-          {"Prev"}
-        </button>
-        {Array.from({ length }, (v, k) => k + 1).map((n) => (
-          <span
-            className={currentSpan === n ? "span-active" : ""}
-            onClick={() => handleSpanClick(n)}
-            key={n}
+        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+          <button
+            className="btn btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === 1}
+            onClick={() => handleNavigation("Prev")}
           >
-            {n}{" "}
-          </span>
-        ))}
-        <button
-          style={{ visibility: currentSpan === length ? "hidden" : "" }}
-          disabled={currentSpan === length}
-          onClick={() => handleNavigation("Next")}
-        >
-          {"Next"}
-        </button>
+            {"Prev"}
+          </button>
+          {Array.from({ length }, (v, k) => k + 1).map((n) => (
+            <button
+              className={currentSpan === n ? "span-active" : ""}
+              style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
+              onClick={() => handleSpanClick(n)}
+              key={n}
+            >
+              {n}{" "}
+            </button>
+          ))}
+          <button
+            className="btn btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === length}
+            onClick={() => handleNavigation("Next")}
+          >
+            {"Next"}
+          </button>
+        </div>
       </div>
     </>
   );

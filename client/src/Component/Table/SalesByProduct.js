@@ -97,24 +97,24 @@ const SalesByProduct = () => {
 
   return (
     <>
-      <h1>Sales By Product</h1>
       <div className="sale-input-container">
+        <h1>Sales By Product</h1>
         <input
-          className="sale-input"
+          className="sale-product-input"
           type="text"
           placeholder="Filter by brand name and category"
           value={filterText}
           onChange={handleFilterChange}
         />
       </div>
-      <div className="table-container">
+      <div className="table-container table-responsive">
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <table>
-            <thead>
+          <table className="table mb-0 table-bordered table-dark table-striped">
+            <thead className="text-center">
               <tr>
                 <th data-column="sno" onClick={handleHeaderClick}>
                   S.No
@@ -159,18 +159,15 @@ const SalesByProduct = () => {
         )}
       </div>
       <br />
-      <div className="table-container" style={{ height: "100px" }}>
-        <p
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-        >
+      <div
+        className="table-container table-responsive"
+        style={{ height: "100px" }}
+      >
+        <p className="d-flex align-items-center justify-content-center mb-0 text-warning text-uppercase text-center bg-black">
           Most Profitable Product
         </p>
-        <table>
-          <thead>
+        <table className="table mb-0 table-bordered table-dark table-striped">
+          <thead className="text-center">
             <tr>
               <th>Product Name</th>
               <th>Brand Name</th>
@@ -181,7 +178,7 @@ const SalesByProduct = () => {
             </tr>
           </thead>
           <tbody>
-            {mostProfitableProduct && (
+            {mostProfitableProduct ? (
               <tr>
                 <td>{mostProfitableProduct.productName}</td>
                 <td>{mostProfitableProduct.brandName}</td>
@@ -190,23 +187,24 @@ const SalesByProduct = () => {
                 <td>{mostProfitableProduct.totalRevenue.toFixed(2)}</td>
                 <td>{mostProfitableProduct.totalProfit.toFixed(2)}</td>
               </tr>
+            ) : (
+              <p className="not-available bg-dark text-danger text-uppercase mb-0">
+                Data for most profitable product not available. Try again later.
+              </p>
             )}
           </tbody>
         </table>
       </div>
       <br />
-      <div className="table-container" style={{ height: "100px" }}>
-        <p
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-        >
+      <div
+        className="table-container table-responsive"
+        style={{ height: "100px" }}
+      >
+        <p className="d-flex align-items-center justify-content-center mb-0 text-danger text-uppercase text-center bg-black">
           Least Profitable Product
         </p>
-        <table>
-          <thead>
+        <table className="table mb-0 table-bordered table-dark table-striped">
+          <thead className="text-center">
             <tr>
               <th>Product Name</th>
               <th>Brand Name</th>
@@ -227,7 +225,7 @@ const SalesByProduct = () => {
                 <td>{leastProfitableProduct.totalProfit.toFixed(2)}</td>
               </tr>
             ) : (
-              <p>
+              <p className="not-available bg-dark text-danger text-uppercase mb-0">
                 Data for least profitable product not available. Try again
                 later.
               </p>
@@ -236,29 +234,34 @@ const SalesByProduct = () => {
         </table>
       </div>
       <div className="span-container">
-        <button
-          style={{ visibility: currentSpan === 1 ? "hidden" : "" }}
-          disabled={currentSpan === 1}
-          onClick={() => handleNavigation("Prev")}
-        >
-          {"Prev"}
-        </button>
-        {Array.from({ length }, (v, k) => k + 1).map((n) => (
-          <span
-            className={currentSpan === n ? "span-active" : ""}
-            onClick={() => handleSpanClick(n)}
-            key={n}
+        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+          <button
+            className="btn btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === 1}
+            onClick={() => handleNavigation("Prev")}
           >
-            {n}{" "}
-          </span>
-        ))}
-        <button
-          style={{ visibility: currentSpan === length ? "hidden" : "" }}
-          disabled={currentSpan === length}
-          onClick={() => handleNavigation("Next")}
-        >
-          {"Next"}
-        </button>
+            {"Prev"}
+          </button>
+          {Array.from({ length }, (v, k) => k + 1).map((n) => (
+            <button
+              className={currentSpan === n ? "btn-active" : ""}
+              style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
+              onClick={() => handleSpanClick(n)}
+              key={n}
+            >
+              {n}{" "}
+            </button>
+          ))}
+          <button
+            className="btn btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === length}
+            onClick={() => handleNavigation("Next")}
+          >
+            {"Next"}
+          </button>
+        </div>
       </div>
     </>
   );

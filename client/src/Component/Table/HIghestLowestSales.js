@@ -33,14 +33,14 @@ const HighestLowestSales = () => {
   return (
     <>
       <h1>Highest Sale</h1>
-      <div className="table-container">
+      <div className="table table-container table-container-hls table-responsive">
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <table>
-            <thead>
+          <table className="mb-0 table-bordered table-dark table-striped">
+            <thead className="text-center">
               <tr>
                 <th>Product Id</th>
                 <th>Product Name</th>
@@ -51,8 +51,7 @@ const HighestLowestSales = () => {
               </tr>
             </thead>
             <tbody>
-              {highestSales ? (
-                highestSales.products &&
+              {highestSales && highestSales.products ? (
                 highestSales.products.map((product) => (
                   <tr key={product.productId}>
                     <td>{product.productId}</td>
@@ -64,22 +63,23 @@ const HighestLowestSales = () => {
                   </tr>
                 ))
               ) : (
-                <p>Data for highest sales not available. Try again later.</p>
+                <p className="not-available">
+                  Data for highest sales not available. Try again later.
+                </p>
               )}
             </tbody>
           </table>
         )}
       </div>
-      <br />
       <h1>Lowest Sale</h1>
-      <div className="table-container">
+      <div className="table table-container table-container-hls table-responsive">
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <table>
-            <thead>
+          <table className="mb-0 table-bordered table-dark table-striped">
+            <thead className="text-center">
               <tr>
                 <th>Product Id</th>
                 <th>Product Name</th>
@@ -90,8 +90,7 @@ const HighestLowestSales = () => {
               </tr>
             </thead>
             <tbody>
-              {lowestSales &&
-                lowestSales.products &&
+              {lowestSales && lowestSales.products ? (
                 lowestSales.products.map((product) => (
                   <tr key={product.productId}>
                     <td>{product.productId}</td>
@@ -101,7 +100,13 @@ const HighestLowestSales = () => {
                     <td>{product.quantitySold}</td>
                     <td>{product.totalTransactionAmount.toFixed(2)}</td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <p className="not-available">
+                  Data for lowest sale not available not available. Try again
+                  later.
+                </p>
+              )}
             </tbody>
           </table>
         )}

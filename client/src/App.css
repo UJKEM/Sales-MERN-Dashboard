@@ -1,19 +1,43 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
+* {
   margin: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(45deg, purple, rgb(73, 45, 50), rgb(22, 22, 75));
 }
 
 .App {
   text-align: center;
   width: 100%;
   overflow-x: hidden;
+  font-family: 'Zilla Slab Highlight', cursive;
+
+}
+
+h1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: black;
 }
 
 .product-input{
-  width: 225px;
+  width: 290px;
 }
 
 .sale-input{
-  width: 272px;
+  width: 385px;
+}
+
+.sale-product-input{
+  width: 290px;
+}
+
+.sale-brand-input{
+  width: 160px;
 }
 
 span:hover{
@@ -21,9 +45,9 @@ span:hover{
   border: 2px dotted rgb(17, 34, 81);
 }
 
-.span-active{
+.btn-active{
   font-weight: bolder;
-  color: goldenrod;
+  color: white;
 }
 
 table {
@@ -31,6 +55,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   overflow: scroll;
+  border-spacing: 0;
 }
 
 thead {
@@ -61,52 +86,51 @@ th, td {
 
 .product-input-container{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items:center;
   width: 100%;
-  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .sale-input-container{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items:center;
   flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.span-container-inner-div{
+  border-radius: 18px;
+  border: 1px solid #0d6efd;
+  background: #0d6efd;
 }
 
 .table-container {
   display: flex;
   justify-content: center; /* center horizontally */
   margin: 0 auto;
-  height: 300px;
+  height: 330px;
   overflow:auto;
   border: 1px solid black;
   border-radius: 10px;
+}
+
+.table-container-hls{
+  height: 10rem;
 }
 
 .span-container{
   display: flex;
   justify-content: center; /* center horizontally */
   gap: 15px;
-  margin-top: 40px;
+  margin-top: 25px;
   flex-wrap: wrap;
 }
 
 .brand-name-column{
   width: 250px;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 header{
@@ -116,12 +140,16 @@ header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #f5f5f5;
-  height: 30px
+  padding: 2px;
+  background-color: #033147;
+  height: 50px;
 }
-a{
-text-decoration: none;
+
+header nav ul li a{
+  margin: 0 10px;
+  list-style: none;
+  color:ghostwhite;
+  font-size: large; 
 }
 
 nav ul {
@@ -130,10 +158,7 @@ nav ul {
   margin: 0;
   padding: 0;
 }
-nav ul li{
-  margin: 0 10px;
-  list-style: none;
-}
+
 .right-aligned-tabs {
   margin-left: auto;
   display: flex;
@@ -141,6 +166,13 @@ nav ul li{
 .right-aligned-tabs a{
   margin-left: 10px;
 }
+
+.not-available{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 
 table::-webkit-scrollbar {
   width: 0.2em; /* set width of the scrollbar */

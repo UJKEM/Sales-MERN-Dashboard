@@ -25,7 +25,7 @@ const SalesTable = (props) => {
   // Sort function
   const sortData = () => {
     setSales(
-      [...sales].sort((a, b) =>
+      sales.sort((a, b) =>
         sortAscending
           ? a[sortBy] > b[sortBy]
             ? 1
@@ -76,6 +76,7 @@ const SalesTable = (props) => {
   return (
     <>
       <div className="sale-input-container">
+        <h1>Sales</h1>
         <input
           className="sale-input"
           type="text"
@@ -84,9 +85,9 @@ const SalesTable = (props) => {
           onChange={handleFilterChange}
         />
       </div>
-      <div className="table-container">
-        <table>
-          <thead>
+      <div className="table-container table-responsive">
+        <table className="table mb-0 table-bordered table-dark table-striped">
+          <thead className="text-center">
             <tr>
               <th data-column="transaction_id" onClick={handleHeaderClick}>
                 Transaction Id
@@ -123,29 +124,34 @@ const SalesTable = (props) => {
         </table>
       </div>
       <div className="span-container">
-        <button
-          style={{ visibility: currentSpan === 1 ? "hidden" : "" }}
-          disabled={currentSpan === 1}
-          onClick={() => handleNavigation("Prev")}
-        >
-          {"Prev"}
-        </button>
-        {Array.from({ length }, (v, k) => k + 1).map((n) => (
-          <span
-            className={currentSpan === n ? "span-active" : ""}
-            onClick={() => handleSpanClick(n)}
-            key={n}
+        <div className="d-flex align-items-center justify-content-center span-container-inner-div">
+          <button
+            className="btn btn-sm btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === 1}
+            onClick={() => handleNavigation("Prev")}
           >
-            {n}{" "}
-          </span>
-        ))}
-        <button
-          style={{ visibility: currentSpan === length ? "hidden" : "" }}
-          disabled={currentSpan === length}
-          onClick={() => handleNavigation("Next")}
-        >
-          {"Next"}
-        </button>
+            {"Prev"}
+          </button>
+          {Array.from({ length }, (v, k) => k + 1).map((n) => (
+            <button
+              className={currentSpan === n ? "btn-active" : ""}
+              style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
+              onClick={() => handleSpanClick(n)}
+              key={n}
+            >
+              {n}{" "}
+            </button>
+          ))}
+          <button
+            className="btn btn-sm btn-primary"
+            style={{ borderRadius: "20px" }}
+            disabled={currentSpan === length}
+            onClick={() => handleNavigation("Next")}
+          >
+            {"Next"}
+          </button>
+        </div>
       </div>
     </>
   );
