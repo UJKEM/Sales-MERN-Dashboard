@@ -7,7 +7,7 @@ const SalesByBrand = () => {
   const [salesByBrand, setSalesByBrand] = useState([]);
   const [loading, setLoading] = useState(true);
   const [length, setLength] = useState(0);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [sortBy, setSortBy] = useState("brandName");
   const [sortAscending, setSortAscending] = useState(true);
@@ -28,7 +28,7 @@ const SalesByBrand = () => {
         setSalesByBrand(data.map((obj) => obj[Object.keys(obj)[0]]));
         setLength(Math.ceil(salesByBrand.length / limit));
       } catch (err) {
-        setError(err + " Try again later.");
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -91,98 +91,103 @@ const SalesByBrand = () => {
 
   return (
     <>
-      <div className="sale-input-container">
-        <h1>Sales By Brand</h1>
-        <input
-          className="sale-brand-input"
-          type="text"
-          placeholder="Filter by brand name"
-          value={filterText}
-          onChange={handleFilterChange}
-        />
-      </div>
-      <div className="table-container table-responsive">
-        {loading ? (
-          <Spinner />
-        ) : error ? (
-          <p>{error}</p>
-        ) : (
-          <table className="table mb-0 table-bordered table-dark table-striped">
-            <thead className="text-center">
-              <tr>
-                <th data-column="sno" onClick={handleHeaderClick}>
-                  S.No
-                </th>
-                <th data-column="brandName" onClick={handleHeaderClick}>
-                  Brand Name
-                </th>
-                <th data-column="mostSoldProduct" onClick={handleHeaderClick}>
-                  Most Sold Product
-                </th>
-                <th data-column="totalQuantitySold" onClick={handleHeaderClick}>
-                  Total Quantity Sold
-                </th>
-                <th data-column="totalRevenue" onClick={handleHeaderClick}>
-                  Total Revenue
-                </th>
-                <th data-column="totalProfit" onClick={handleHeaderClick}>
-                  Total Profit
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {salesByBrand ? (
-                sortData(filterCaseInsensitive(salesByBrand)).map(
-                  (row, index) => (
-                    <tr key={row.brandName}>
-                      <td>{index + 1}</td>
-                      <td>{row.brandName}</td>
-                      <td>{row.mostSoldProduct}</td>
-                      <td>{row.totalQuantitySold}</td>
-                      <td>{row.totalRevenue.toFixed(2)}</td>
-                      <td>{row.totalProfit.toFixed(2)}</td>
-                    </tr>
+      {error ? (
+        <p className="d-flex align-items-center justify-content-center text-white">
+          {"Data may not be available. Check back later."}
+        </p>
+      ) : loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="sale-input-container">
+            <h1>Sales By Brand</h1>
+            <input
+              className="sale-brand-input"
+              type="text"
+              placeholder="Filter by brand name"
+              value={filterText}
+              onChange={handleFilterChange}
+            />
+          </div>
+          <div className="table-container table-responsive">
+            <table className="table mb-0 table-bordered table-dark table-striped">
+              <thead className="text-center">
+                <tr>
+                  <th data-column="sno" onClick={handleHeaderClick}>
+                    S.No
+                  </th>
+                  <th data-column="brandName" onClick={handleHeaderClick}>
+                    Brand Name
+                  </th>
+                  <th data-column="mostSoldProduct" onClick={handleHeaderClick}>
+                    Most Sold Product
+                  </th>
+                  <th
+                    data-column="totalQuantitySold"
+                    onClick={handleHeaderClick}
+                  >
+                    Total Quantity Sold
+                  </th>
+                  <th data-column="totalRevenue" onClick={handleHeaderClick}>
+                    Total Revenue
+                  </th>
+                  <th data-column="totalProfit" onClick={handleHeaderClick}>
+                    Total Profit
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {salesByBrand ? (
+                  sortData(filterCaseInsensitive(salesByBrand)).map(
+                    (row, index) => (
+                      <tr key={row.brandName}>
+                        <td>{index + 1}</td>
+                        <td>{row.brandName}</td>
+                        <td>{row.mostSoldProduct}</td>
+                        <td>{row.totalQuantitySold}</td>
+                        <td>{row.totalRevenue.toFixed(2)}</td>
+                        <td>{row.totalProfit.toFixed(2)}</td>
+                      </tr>
+                    )
                   )
-                )
-              ) : (
-                <p className="not-available">
-                  Data for sales by brand not available. Try again later.
-                </p>
-              )}
-            </tbody>
-          </table>
-        )}
-      </div>
-      <div className="span-container">
-        <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
-          <button
-            className="btn btn-primary"
-            style={{ borderRadius: "20px" }}
-            disabled={currentSpan === 1}
-            onClick={() => handleNavigation("Prev")}
-          >
-            {"Prev"}
-          </button>
-          {Array.from({ length }, (v, k) => k + 1).map((n) => (
-            <button
-              className={currentSpan === n ? "span-active" : ""}
-              style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
-              onClick={() => handleSpanClick(n)}
-              key={n}
-            >
-              {n}{" "}
-            </button>
-          ))}
-          <button
-            className="btn btn-primary"
-            style={{ borderRadius: "20px" }}
-            disabled={currentSpan === length}
-            onClick={() => handleNavigation("Next")}
-          >
-            {"Next"}
-          </button>
-        </div>
-      </div>
+                ) : (
+                  <p>Data for sales by brand not available. Try again later.</p>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="span-container">
+            <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
+              <button
+                className="btn btn-primary"
+                style={{ borderRadius: "20px" }}
+                disabled={currentSpan === 1}
+                onClick={() => handleNavigation("Prev")}
+              >
+                {"Prev"}
+              </button>
+              {Array.from({ length }, (v, k) => k + 1).map((n) => (
+                <button
+                  className={currentSpan === n ? "span-active" : ""}
+                  style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
+                  onClick={() => handleSpanClick(n)}
+                  key={n}
+                >
+                  {n}{" "}
+                </button>
+              ))}
+              <button
+                className="btn btn-primary"
+                style={{ borderRadius: "20px" }}
+                disabled={currentSpan === length}
+                onClick={() => handleNavigation("Next")}
+              >
+                {"Next"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -6,7 +6,6 @@ const Welcome = () => {
   const toastShown = useRef(false);
 
   useEffect(() => {
-    console.log(toastShown);
     if (!toastShown.current) {
       toast.info("Welcome to Sales Dashboard", {
         progressClassName: "progress-bar-striped",

@@ -8,7 +8,7 @@ const SalesByProduct = () => {
   const [mostProfitableProduct, setMostProfitableProduct] = useState();
   const [leastProfitableProduct, setLeastProfitableProduct] = useState();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [length, setLength] = useState(0);
   const [filterText, setFilterText] = useState("");
   const [sortBy, setSortBy] = useState("productId");
@@ -32,7 +32,7 @@ const SalesByProduct = () => {
         setMostProfitableProduct(data.mostProfitableProduct);
         setLeastProfitableProduct(data.leastProfitableProduct);
       } catch (error) {
-        setError(error.message + " Try again later");
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -98,172 +98,185 @@ const SalesByProduct = () => {
 
   return (
     <>
-      <div className="sale-input-container">
-        <h1>Sales By Product</h1>
-        <input
-          className="sale-product-input"
-          type="text"
-          placeholder="Filter by brand name and category"
-          value={filterText}
-          onChange={handleFilterChange}
-        />
-      </div>
-      <div className="table-container table-responsive">
-        {loading ? (
-          <Spinner />
-        ) : error ? (
-          <p>{error}</p>
-        ) : (
-          <table className="table mb-0 table-bordered table-dark table-striped">
-            <thead className="text-center">
-              <tr>
-                <th data-column="sno" onClick={handleHeaderClick}>
-                  S.No
-                </th>
-                <th data-column="productName" onClick={handleHeaderClick}>
-                  Product Name
-                </th>
-                <th data-column="brandName" onClick={handleHeaderClick}>
-                  Brand Name
-                </th>
-                <th data-column="category" onClick={handleHeaderClick}>
-                  Category
-                </th>
-                <th data-column="totalQuantitySold" onClick={handleHeaderClick}>
-                  Total Quantity Sold
-                </th>
-                <th data-column="totalRevenue" onClick={handleHeaderClick}>
-                  Total Revenue
-                </th>
-                <th data-column="totalProfit" onClick={handleHeaderClick}>
-                  Total Profit
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {salesByProduct &&
-                sortData(filterCaseInsensitive(salesByProduct)).map(
-                  (row, index) => (
-                    <tr key={row.productId}>
-                      <td>{index + 1}</td>
-                      <td>{row.productName}</td>
-                      <td>{row.brandName}</td>
-                      <td>{row.category}</td>
-                      <td>{row.totalQuantitySold}</td>
-                      <td>{row.totalRevenue.toFixed(2)}</td>
-                      <td>{row.totalProfit.toFixed(2)}</td>
-                    </tr>
+      {error ? (
+        <p className="d-flex align-items-center justify-content-center text-white">
+          {"Data may not be available. Check back later."}
+        </p>
+      ) : loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="sale-input-container">
+            <h1>Sales By Product</h1>
+            <input
+              className="sale-product-input"
+              type="text"
+              placeholder="Filter by brand name and category"
+              value={filterText}
+              onChange={handleFilterChange}
+            />
+          </div>
+          <div className="table-container table-responsive">
+            <table className="table mb-0 table-bordered table-dark table-striped">
+              <thead className="text-center">
+                <tr>
+                  <th data-column="sno" onClick={handleHeaderClick}>
+                    S.No
+                  </th>
+                  <th data-column="productName" onClick={handleHeaderClick}>
+                    Product Name
+                  </th>
+                  <th data-column="brandName" onClick={handleHeaderClick}>
+                    Brand Name
+                  </th>
+                  <th data-column="category" onClick={handleHeaderClick}>
+                    Category
+                  </th>
+                  <th
+                    data-column="totalQuantitySold"
+                    onClick={handleHeaderClick}
+                  >
+                    Total Quantity Sold
+                  </th>
+                  <th data-column="totalRevenue" onClick={handleHeaderClick}>
+                    Total Revenue
+                  </th>
+                  <th data-column="totalProfit" onClick={handleHeaderClick}>
+                    Total Profit
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {salesByProduct ? (
+                  sortData(filterCaseInsensitive(salesByProduct)).map(
+                    (row, index) => (
+                      <tr key={row.productId}>
+                        <td>{index + 1}</td>
+                        <td>{row.productName}</td>
+                        <td>{row.brandName}</td>
+                        <td>{row.category}</td>
+                        <td>{row.totalQuantitySold}</td>
+                        <td>{row.totalRevenue.toFixed(2)}</td>
+                        <td>{row.totalProfit.toFixed(2)}</td>
+                      </tr>
+                    )
                   )
+                ) : (
+                  <p className="d-flex align-items-center justify-content-center text-white">
+                    {"Data may not be available. Check back later."}
+                  </p>
                 )}
-            </tbody>
-          </table>
-        )}
-      </div>
-      <br />
-      <div
-        className="table-container table-responsive"
-        style={{ height: "100px" }}
-      >
-        <p className="d-flex align-items-center justify-content-center mb-0 text-warning text-uppercase text-center bg-black">
-          Most Profitable Product
-        </p>
-        <table className="table mb-0 table-bordered table-dark table-striped">
-          <thead className="text-center">
-            <tr>
-              <th>Product Name</th>
-              <th>Brand Name</th>
-              <th>Category</th>
-              <th>Total Quantity Sold</th>
-              <th>Total Revenue</th>
-              <th>Total Profit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mostProfitableProduct ? (
-              <tr>
-                <td>{mostProfitableProduct.productName}</td>
-                <td>{mostProfitableProduct.brandName}</td>
-                <td>{mostProfitableProduct.category}</td>
-                <td>{mostProfitableProduct.totalQuantitySold}</td>
-                <td>{mostProfitableProduct.totalRevenue.toFixed(2)}</td>
-                <td>{mostProfitableProduct.totalProfit.toFixed(2)}</td>
-              </tr>
-            ) : (
-              <p className="not-available bg-dark text-danger text-uppercase mb-0">
-                Data for most profitable product not available. Try again later.
-              </p>
-            )}
-          </tbody>
-        </table>
-      </div>
-      <br />
-      <div
-        className="table-container table-responsive"
-        style={{ height: "100px" }}
-      >
-        <p className="d-flex align-items-center justify-content-center mb-0 text-danger text-uppercase text-center bg-black">
-          Least Profitable Product
-        </p>
-        <table className="table mb-0 table-bordered table-dark table-striped">
-          <thead className="text-center">
-            <tr>
-              <th>Product Name</th>
-              <th>Brand Name</th>
-              <th>Category</th>
-              <th>Total Quantity Sold</th>
-              <th>Total Revenue</th>
-              <th>Total Profit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leastProfitableProduct ? (
-              <tr>
-                <td>{leastProfitableProduct.productName}</td>
-                <td>{leastProfitableProduct.brandName}</td>
-                <td>{leastProfitableProduct.category}</td>
-                <td>{leastProfitableProduct.totalQuantitySold}</td>
-                <td>{leastProfitableProduct.totalRevenue.toFixed(2)}</td>
-                <td>{leastProfitableProduct.totalProfit.toFixed(2)}</td>
-              </tr>
-            ) : (
-              <p className="not-available bg-dark text-danger text-uppercase mb-0">
-                Data for least profitable product not available. Try again
-                later.
-              </p>
-            )}
-          </tbody>
-        </table>
-      </div>
-      <div className="span-container">
-        <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
-          <button
-            className="btn btn-primary"
-            style={{ borderRadius: "20px" }}
-            disabled={currentSpan === 1}
-            onClick={() => handleNavigation("Prev")}
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <div
+            className="table-container table-responsive"
+            style={{ height: "100px" }}
           >
-            {"Prev"}
-          </button>
-          {Array.from({ length }, (v, k) => k + 1).map((n) => (
-            <button
-              className={currentSpan === n ? "btn-active" : ""}
-              style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
-              onClick={() => handleSpanClick(n)}
-              key={n}
-            >
-              {n}{" "}
-            </button>
-          ))}
-          <button
-            className="btn btn-primary"
-            style={{ borderRadius: "20px" }}
-            disabled={currentSpan === length}
-            onClick={() => handleNavigation("Next")}
+            <p className="d-flex align-items-center justify-content-center mb-0 text-warning text-uppercase text-center bg-black">
+              Most Profitable Product
+            </p>
+            <table className="table mb-0 table-bordered table-dark table-striped">
+              <thead className="text-center">
+                <tr>
+                  <th>Product Name</th>
+                  <th>Brand Name</th>
+                  <th>Category</th>
+                  <th>Total Quantity Sold</th>
+                  <th>Total Revenue</th>
+                  <th>Total Profit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mostProfitableProduct ? (
+                  <tr>
+                    <td>{mostProfitableProduct.productName}</td>
+                    <td>{mostProfitableProduct.brandName}</td>
+                    <td>{mostProfitableProduct.category}</td>
+                    <td>{mostProfitableProduct.totalQuantitySold}</td>
+                    <td>{mostProfitableProduct.totalRevenue.toFixed(2)}</td>
+                    <td>{mostProfitableProduct.totalProfit.toFixed(2)}</td>
+                  </tr>
+                ) : (
+                  <p className="d-flex align-items-center justify-content-center text-white">
+                    Data for most profitable product not available. Try again
+                    later.
+                  </p>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <div
+            className="table-container table-responsive"
+            style={{ height: "100px" }}
           >
-            {"Next"}
-          </button>
-        </div>
-      </div>
+            <p className="d-flex align-items-center justify-content-center mb-0 text-danger text-uppercase text-center bg-black">
+              Least Profitable Product
+            </p>
+            <table className="table mb-0 table-bordered table-dark table-striped">
+              <thead className="text-center">
+                <tr>
+                  <th>Product Name</th>
+                  <th>Brand Name</th>
+                  <th>Category</th>
+                  <th>Total Quantity Sold</th>
+                  <th>Total Revenue</th>
+                  <th>Total Profit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leastProfitableProduct ? (
+                  <tr>
+                    <td>{leastProfitableProduct.productName}</td>
+                    <td>{leastProfitableProduct.brandName}</td>
+                    <td>{leastProfitableProduct.category}</td>
+                    <td>{leastProfitableProduct.totalQuantitySold}</td>
+                    <td>{leastProfitableProduct.totalRevenue.toFixed(2)}</td>
+                    <td>{leastProfitableProduct.totalProfit.toFixed(2)}</td>
+                  </tr>
+                ) : (
+                  <p className="d-flex align-items-center justify-content-center text-white">
+                    Data for least profitable product not available. Try again
+                    later.
+                  </p>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="span-container">
+            <div className="d-flex align-items-center justify-content-center flex-wrap span-container-inner-div">
+              <button
+                className="btn btn-primary"
+                style={{ borderRadius: "20px" }}
+                disabled={currentSpan === 1}
+                onClick={() => handleNavigation("Prev")}
+              >
+                {"Prev"}
+              </button>
+              {Array.from({ length }, (v, k) => k + 1).map((n) => (
+                <button
+                  className={currentSpan === n ? "btn-active" : ""}
+                  style={{ backgroundColor: "rgba(15, 73, 100, 0.764)" }}
+                  onClick={() => handleSpanClick(n)}
+                  key={n}
+                >
+                  {n}{" "}
+                </button>
+              ))}
+              <button
+                className="btn btn-primary"
+                style={{ borderRadius: "20px" }}
+                disabled={currentSpan === length}
+                onClick={() => handleNavigation("Next")}
+              >
+                {"Next"}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [sales, setSales] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   const getData = useCallback(async () => {
     const { data } = await axios.get("http://localhost:4000");
@@ -24,7 +24,7 @@ const Dashboard = () => {
         setSales(data["sales"]);
         setProducts(data["products"]);
       } catch (err) {
-        setError(err.message);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -34,15 +34,18 @@ const Dashboard = () => {
 
   return loading ? (
     <Spinner />
-  ) : !error ? (
+  ) : error ? (
+    <p className="d-flex align-items-center justify-content-center text-white">
+      {"Data may not be available now. Check back later."}
+    </p>
+  ) : (
     <div className="dashboard-container">
       <div>
         {products ? (
           <ProductsTable products={products} error={error} />
         ) : (
-          <p>
-            {" "}
-            Data for Product not available. Try refreshing after 60 seconds.{" "}
+          <p className="d-flex align-items-center justify-content-center text-white">
+            Data for Product not available. Try refreshing after 90 seconds.
           </p>
         )}
       </div>
@@ -50,7 +53,9 @@ const Dashboard = () => {
         {sales ? (
           <SalesTable sales={sales} error={error} />
         ) : (
-          <p>Data for Sales not available. Try refreshing after 90 seconds.</p>
+          <p className="d-flex align-items-center justify-content-center text-white">
+            Data for Sales not available. Try refreshing after 60 seconds.
+          </p>
         )}
       </div>
       <br />
@@ -59,8 +64,6 @@ const Dashboard = () => {
         updated data.{" "}
       </p>
     </div>
-  ) : (
-    <p>{error}</p>
   );
 };
 

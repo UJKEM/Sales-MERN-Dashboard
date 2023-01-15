@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import Header from "./Component/Header/Header";
 import Dashboard from "./Component/Dashboard/Dashboard";
 import Welcome from "./Component/Toast/Welcome";
+import Spinner from "./Component/Spinner/Spinner";
 
 const SalesByProduct = React.lazy(() =>
   import("./Component/Table/SalesByProduct")
@@ -27,7 +28,7 @@ const App = () => {
         <Suspense
           fallback={
             <div>
-              <p className="loading">Loading...</p>
+              <Spinner />
             </div>
           }
         >

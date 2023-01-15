@@ -4,13 +4,10 @@
   box-sizing: content-box;
 }
 
-:root{
-  height: 100vh;
-}
-
 body {
   font-family: 'Poppins', sans-serif !important;
   background: linear-gradient(45deg, purple, rgb(73, 45, 50), rgb(22, 22, 75));
+  height: 100vh;
 }
 
 .App {

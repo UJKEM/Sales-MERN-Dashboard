@@ -6,7 +6,7 @@ const HighestLowestSales = () => {
   const [highestSales, setHighestSale] = useState([]);
   const [lowestSales, setLowestSale] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   const getSalesByBrand = useCallback(async () => {
     const { data } = await axios.get(
@@ -23,7 +23,7 @@ const HighestLowestSales = () => {
         setHighestSale(data.highestSales);
         setLowestSale(data.lowestSales);
       } catch (err) {
-        setError(err + " Try again later.");
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -33,12 +33,15 @@ const HighestLowestSales = () => {
 
   return (
     <>
+      {console.log(error)}
       <h1>Highest Sale</h1>
       <div className="table table-container table-container-hls table-responsive">
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>{error}</p>
+          <p className="d-flex align-items-center justify-content-center text-white">
+            {"Data may not be available now. Check back later."}
+          </p>
         ) : (
           <table className="mb-0 table-bordered table-dark table-striped">
             <thead className="text-center">
@@ -77,7 +80,9 @@ const HighestLowestSales = () => {
         {loading ? (
           <Spinner />
         ) : error ? (
-          <p>{error}</p>
+          <p className="d-flex align-items-center justify-content-center text-white">
+            {"Data may not be available. Check back later."}
+          </p>
         ) : (
           <table className="mb-0 table-bordered table-dark table-striped">
             <thead className="text-center">
