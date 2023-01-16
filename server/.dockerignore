@@ -1,2 +1,4 @@
 .gitignore
+Dockerfile
 .env
+.dockerignore

@@ -9,8 +9,12 @@ services:
     container_name: nodejs-api
     links:
       - mongo-db
+    env_file: 
+      - .env
   mongo-db:
     image: mongo
+    env_file: 
+      - .env
     ports:
       - "27017:27017"
     container_name: mongo-db

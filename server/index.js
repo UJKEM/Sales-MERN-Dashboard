@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
+const MONGODB_URL = process.env.MONGODB_URL;
 
 //Package to connect to the database
 const mongoose = require("mongoose");
@@ -68,7 +69,7 @@ app.use((error, req, res, next) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGODB_URL, {
+  .connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

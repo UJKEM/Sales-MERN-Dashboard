@@ -1,32 +1,24 @@
 {
-  "name": "lf",
+  "name": "leapfrog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "mocha test/**/*.js"
+    "test": "cd server && npm run test",
+    "start": "concurrently \"cd server && docker-compose build && docker-compose up\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UJKEM/Sales-MERN-Dashboard.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "chai": "^4.3.7",
-    "jest": "^29.3.1",
-    "mocha": "^10.2.0",
-    "nodemon": "^2.0.20",
-    "sinon": "^15.0.1",
-    "supertest": "^6.3.3"
+  "bugs": {
+    "url": "https://github.com/UJKEM/Sales-MERN-Dashboard/issues"
   },
+  "homepage": "https://github.com/UJKEM/Sales-MERN-Dashboard#readme",
   "dependencies": {
-    "chance": "^1.1.9",
-    "cors": "^2.8.5",
-    "csv-stringify": "^6.2.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "helmet": "^6.0.1",
-    "mongoose": "^6.8.3",
-    "morgan": "^1.10.0"
+    "concurrently": "^7.6.0"
   }
 }

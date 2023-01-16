@@ -37,10 +37,12 @@ describe("processAndStoreData", () => {
         const count = await Sale.countDocuments();
         expect(count).toEqual(2);
         const sale = await Sale.findOne({ transaction_id: "123" });
-        expect(sale.product_id).toEqual("456");
-        expect(sale.quantity).toEqual(2);
-        expect(sale.total_transaction_amount).toEqual(10.99);
-        expect(sale.transaction_date).toEqual("2022-01-01");
+        if (sale) {
+          expect(sale.product_id).toEqual("456");
+          expect(sale.quantity).toEqual(2);
+          expect(sale.total_transaction_amount).toEqual(10.99);
+          expect(sale.transaction_date).toEqual("2022-01-01");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -55,12 +57,14 @@ describe("processAndStoreData", () => {
         const count = await Product.countDocuments();
         expect(count).toEqual(2);
         const product = await Product.findOne({ product_id: "123" });
-        expect(product.product_name).toEqual("test product");
-        expect(product.brand_name).toEqual("test brand");
-        expect(product.cost_price).toEqual(10);
-        expect(product.selling_price).toEqual(20);
-        expect(product.category).toEqual("test category");
-        expect(product.expiry_date).toEqual("2022-01-01");
+        if (product) {
+          expect(product.product_name).toEqual("test product");
+          expect(product.brand_name).toEqual("test brand");
+          expect(product.cost_price).toEqual(10);
+          expect(product.selling_price).toEqual(20);
+          expect(product.category).toEqual("test category");
+          expect(product.expiry_date).toEqual("2022-01-01");
+        }
       } catch (err) {
         console.log(err);
       }

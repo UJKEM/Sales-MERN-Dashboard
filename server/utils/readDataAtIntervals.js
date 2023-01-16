@@ -26,7 +26,7 @@ const processSales = () => {
       // Increment the index for the next file
       salesIndex++;
     });
-  }, 10 * 1000); // Run every 60 seconds
+  }, 60 * 1000); // Run every 60 seconds
 };
 
 // Function to read and process products files
@@ -56,7 +56,7 @@ const processProducts = () => {
       // Increment the index for the next file
       productIndex++;
     });
-  }, 20 * 1000); // Run every 90 seconds
+  }, 90 * 1000); // Run every 90 seconds
 };
 
 module.exports = {

@@ -24,14 +24,14 @@ router.get("/", async (req, res) => {
     }
 
     if (sales.length === 0 && products.length === 0) {
-      return res.status(404).json({
+      return res.status(404).send({
         message: "No data found",
       });
     }
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: err });
+    res.status(500).send({ message: err });
   }
 });
 
@@ -43,8 +43,8 @@ router.get("/sales-by-product", async (req, res) => {
     // Query the database for sales data and product data
     const sales = await Sale.find();
     const products = await Product.find();
-    if (!sales || !products) {
-      return res.status(404).json({
+    if (sales.length < 1 || products.length < 1) {
+      return res.status(404).send({
         message:
           "Cannot perform operation. One or both the collections are empty",
       });
@@ -76,6 +76,13 @@ router.get("/sales-by-product", async (req, res) => {
 
     const productsArray = Object.values(salesByProduct);
 
+    if (!productsArray) {
+      return res.status(404).send({
+        message:
+          "Cannot perform operation. One or both the collections are empty",
+      });
+    }
+
     //Calculate most profitable product
     const mostProfitableProduct = productsArray.reduce((acc, product) => {
       if (!acc || product.totalProfit > acc.totalProfit) {
@@ -91,7 +98,7 @@ router.get("/sales-by-product", async (req, res) => {
       }
       return acc;
     }, null);
-    res.status(200).json({
+    res.status(200).send({
       result: Object.keys(salesByProduct).map((key, index) => ({
         [index]: salesByProduct[key],
       })),
@@ -100,7 +107,7 @@ router.get("/sales-by-product", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: err });
+    res.status(500).send({ message: err });
   }
 });
 
@@ -113,8 +120,8 @@ router.get("/sales-by-brand", async (req, res) => {
     const sales = await Sale.find();
     const products = await Product.find();
 
-    if (!sales || !products)
-      return res.status(404).json({
+    if (sales.length < 1 || products.length < 1)
+      return res.status(404).send({
         message:
           "Cannot perform operation. One or both the collections are empty",
       });
@@ -147,14 +154,14 @@ router.get("/sales-by-brand", async (req, res) => {
     }, {});
 
     // Send the response back to the client
-    return res.status(200).json({
+    return res.status(200).send({
       result: Object.keys(salesByBrand).map((key, index) => ({
         [index]: salesByBrand[key],
       })),
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err });
+    res.status(500).send({ error: err });
   }
 });
 
@@ -167,8 +174,8 @@ router.get("/highest-lowest-sales", async (req, res) => {
     const sales = await Sale.find();
     const products = await Product.find();
 
-    if (!sales || !products)
-      return res.status(404).json({
+    if (sales.length < 1 || products.length < 1)
+      return res.status(404).send({
         message:
           "Cannot perform operation. One or both the collections are empty",
       });
@@ -215,13 +222,13 @@ router.get("/highest-lowest-sales", async (req, res) => {
     }, null);
 
     // Send the response back to the client
-    return res.status(200).json({
+    return res.status(200).send({
       highestSales,
       lowestSales,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err });
+    res.status(500).send({ message: err });
   }
 });
 
